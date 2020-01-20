@@ -169,7 +169,7 @@ def image_random_data_generator(
 
         # yield the result
         total_array = np.array(resized_images_2)
-        yield total_array, np.ones(total_array.shape[0], 1)
+        yield total_array, np.ones([total_array.shape[0], 1])
 
 
 def process_one_image(
