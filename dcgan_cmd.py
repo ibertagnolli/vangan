@@ -161,8 +161,8 @@ def image_random_data_generator(
 
         resized_images_2 = []
         for img_ in resized_images:
-            if len(img_.shape) < 3:
-                img_ = np.repeat(img_.reshape(image_size[0], image_size[1], 1), 3, axis=2)
+            if len(img_.shape) >= 3:
+                #img_ = np.repeat(img_.reshape(image_size[0], image_size[1], 1), 3, axis=2)
             resized_images_2.append(img_)
 
 
