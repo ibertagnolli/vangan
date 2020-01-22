@@ -139,7 +139,7 @@ def image_random_data_generator(
     y_train = np.ones([batch_size, 1])
     while True:
         # Randomly Sample batch_size worth of images
-        sample_idxs = np.random.randint(0, len(file_names), batch_size)
+        sample_idxs = np.random.randint(0, len(file_names), batch_size + 50)
 
         sampled_files = [file_names[i] for i in sample_idxs]
 
@@ -169,8 +169,8 @@ def image_random_data_generator(
 
         # yield the result
         try:
-            total_array = np.array(resized_images_2)
-            yield total_array, np.ones([total_array.shape[0], 1])
+            total_array = np.array(resized_images_2)[:batch_size]
+            yield total_array, y_train
         except Exception as e:
             print(e)
             print(sampled_files)
