@@ -466,6 +466,8 @@ class DCGAN:
                 fake = np.zeros((batch_size, 1))
 
             # Train the discriminator (real classified as ones and generated as zeros)
+            print("num images: ", imgs.shape)
+            print("num labels: ", valid.shape)
             d_loss_real = self.discriminator.train_on_batch(imgs, valid)
             d_loss_fake = self.discriminator.train_on_batch(gen_imgs, fake)
             d_loss = 0.5 * np.add(d_loss_real, d_loss_fake)
