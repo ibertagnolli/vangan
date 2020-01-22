@@ -161,8 +161,8 @@ def image_random_data_generator(
 
         resized_images_2 = []
         for img_ in resized_images:
-            if len(img_.shape) >= 3:
-                #img_ = np.repeat(img_.reshape(image_size[0], image_size[1], 1), 3, axis=2)
+            if len(img_.shape) < 3:
+                img_ = np.repeat(img_.reshape(image_size[0], image_size[1], 1), 3, axis=2)
                 resized_images_2.append(img_)
 
 
@@ -598,25 +598,28 @@ def train(
     rows = length
     cols = length
     gen = image_random_data_generator(images_path, (rows, cols), batch_size=batch_size)
-    dcgan = DCGAN(
-        rows,
-        cols,
-        3,
-        model_name,
-        100,
-        load_all_data=False,
-        model_save_dir=model_save_dir,
-        dropout_rate=dropout_rate,
-        dropout_at_test=dropout_at_test,
-        num_base_filters=num_base_filters,
-    )
-    dcgan.train(
-        gen,
-        epochs=epochs,
-        batch_size=batch_size,
-        save_interval=save_interval,
-        label_smoothing=label_smoothing,
-    )
+    for i in range(2000):
+        gen.__iter__().__next__()
+
+    # dcgan = DCGAN(
+    #     rows,
+    #     cols,
+    #     3,
+    #     model_name,
+    #     100,
+    #     load_all_data=False,
+    #     model_save_dir=model_save_dir,
+    #     dropout_rate=dropout_rate,
+    #     dropout_at_test=dropout_at_test,
+    #     num_base_filters=num_base_filters,
+    # )
+    # dcgan.train(
+    #     gen,
+    #     epochs=epochs,
+    #     batch_size=batch_size,
+    #     save_interval=save_interval,
+    #     label_smoothing=label_smoothing,
+    # )
 
 
 if __name__ == "__main__":
