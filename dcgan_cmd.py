@@ -168,8 +168,12 @@ def image_random_data_generator(
 
 
         # yield the result
-        total_array = np.array(resized_images_2)
-        yield total_array, np.ones([total_array.shape[0], 1])
+        try:
+            total_array = np.array(resized_images_2)
+            yield total_array, np.ones([total_array.shape[0], 1])
+        except Exception as e:
+            print(e)
+            print(sampled_files)
 
 
 def process_one_image(
@@ -598,28 +602,26 @@ def train(
     rows = length
     cols = length
     gen = image_random_data_generator(images_path, (rows, cols), batch_size=batch_size)
-    for i in range(2000):
-        gen.__iter__().__next__()
 
-    # dcgan = DCGAN(
-    #     rows,
-    #     cols,
-    #     3,
-    #     model_name,
-    #     100,
-    #     load_all_data=False,
-    #     model_save_dir=model_save_dir,
-    #     dropout_rate=dropout_rate,
-    #     dropout_at_test=dropout_at_test,
-    #     num_base_filters=num_base_filters,
-    # )
-    # dcgan.train(
-    #     gen,
-    #     epochs=epochs,
-    #     batch_size=batch_size,
-    #     save_interval=save_interval,
-    #     label_smoothing=label_smoothing,
-    # )
+    dcgan = DCGAN(
+        rows,
+        cols,
+        3,
+        model_name,
+        100,
+        load_all_data=False,
+        model_save_dir=model_save_dir,
+        dropout_rate=dropout_rate,
+        dropout_at_test=dropout_at_test,
+        num_base_filters=num_base_filters,
+    )
+    dcgan.train(
+        gen,
+        epochs=epochs,
+        batch_size=batch_size,
+        save_interval=save_interval,
+        label_smoothing=label_smoothing,
+    )
 
 
 if __name__ == "__main__":
