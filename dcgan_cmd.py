@@ -160,16 +160,19 @@ def image_random_data_generator(
         ]
 
         resized_images_2 = []
-        for img_ in resized_images:
-            if len(img_.shape) < 3:
-                img_ = np.repeat(img_.reshape(image_size[0], image_size[1], 1), 3, axis=2)
+        print("starting filter")
+        print(len(resized_images))
+        for file_name, img_ in zip(sampled_files, resized_images):
+            if len(img_.shape) >= 3:
+                #img_ = np.repeat(img_.reshape(image_size[0], image_size[1], 1), 3, axis=2)
                 resized_images_2.append(img_)
-
+                print(file_name)
 
 
         # yield the result
         try:
             total_array = np.array(resized_images_2)[:batch_size]
+            print("num images inside : ", total_array.shape)
             yield total_array, y_train
         except Exception as e:
             print(e)
@@ -231,8 +234,8 @@ def image_all_data_generator(
     # imgs = []
     # for file_name in tqdm(file_names):
     #     img = mpimg.imread(os.path.join(data_path, file_name))
-    #     if image_crop is not None:
-    #         img = img[image_crop:-image_crop, image_crop:-image_crop]
+    if image_crop is not None:
+        img = img[image_crop:-image_crop, image_crop:-image_crop]
     #
     #     # Resize the images
     #     resized_image = misc.imresize(img, image_size)
@@ -450,8 +453,10 @@ class DCGAN:
                 imgs = x_train[idx]
             else:
                 imgs, valid = data_generator.__iter__().__next__()
+
                 if self.rescale:
                     imgs = imgs / 127.5 - 1
+            print("num images: ", imgs.shape)
 
             # Sample noise and generate a batch of new images
             noise = np.random.normal(0, 1, (batch_size, self.latent_dim))
@@ -604,6 +609,8 @@ def train(
     rows = length
     cols = length
     gen = image_random_data_generator(images_path, (rows, cols), batch_size=batch_size)
+    # for i in range(2000):
+    #     gen.__iter__().__next__()
 
     dcgan = DCGAN(
         rows,
