@@ -166,7 +166,7 @@ def image_random_data_generator(
             if len(img_.shape) >= 3:
                 #img_ = np.repeat(img_.reshape(image_size[0], image_size[1], 1), 3, axis=2)
                 resized_images_2.append(img_)
-                print(file_name)
+                #print(file_name)
 
 
         # yield the result
@@ -176,7 +176,7 @@ def image_random_data_generator(
             yield total_array, y_train
         except Exception as e:
             print(e)
-            print(sampled_files)
+            #print(sampled_files)
 
 
 def process_one_image(
