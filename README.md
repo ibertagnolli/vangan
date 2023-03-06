@@ -1,4 +1,4 @@
-# vangan Computational Aesthetics Using Generative Adversarial Networks 
+# Vangan Computational Aesthetics Using Generative Adversarial Networks 
 
 This project was made for my High School Science fair in Spring 2020. I placed first in the computer science division and won the directors award at the University of Utah Science fair. The project is a Generative adversarial Netowrk that was trained on thousands of impressionist landscape and Van Gogh paintings I scraped from the internet. 
 
